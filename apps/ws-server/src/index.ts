@@ -8,7 +8,7 @@ const server = new WebSocketServer({
 
 server.on("connection", async (socket) => {
     try {
-        client.user.create({
+        await client.user.create({
             data: {
                 username: Math.random().toString(),
                 password: Math.random().toString()
