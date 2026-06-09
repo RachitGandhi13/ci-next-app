@@ -17,4 +17,4 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H 168.144.157.227 >> ~/.ssh/known_hosts
-          ssh -i ~/.ssh/deploy_key root@168.144.157.227 "cd ci-next-app && git pull && pnpm install && pnpm run build && pm2 restart http-server && pm2 restart web && pm2 restart ws-server"
+          ssh -i ~/.ssh/deploy_key root@168.144.157.227 "cd ci-next-app && git fetch origin && git reset --hard origin/main && pnpm install && pnpm run build && pm2 restart http-server && pm2 restart web && pm2 restart ws-server"
