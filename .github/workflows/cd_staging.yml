@@ -1,0 +1,22 @@
+name: Deploy to staging
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  redeploy_everything:
+    name: Deploying everything to the staging cluster
+
+    steps:
+      - name: SSH Into server
+      - run: |
+          echo ${{ secrets.SSH_PRIVATE_KEY }} &> ~/ssh_key
+          ssh -i ~/.ssh/id_ed25519 root@168.144.157.227
+          cd ci-next-app/ && git pull
+          pnpm install
+          pnpm run build
+          pm2 restart http-server
+          pm2 restart web
+          pm2 restart ws-server
